@@ -75,16 +75,10 @@ app.delete("/api/notes/:id", function(req, res) {
         } 
     }
     // if ID is not found
-    return res.json(false);
+    return res.status(404).json(false);
 });
 
-app.get("/assets/css/styles.css", function(req, res) {
-  res.sendFile(path.join(__dirname, "/public/assets/css/styles.css"));
-});
-
-app.get("/assets/js/index.js", function(req, res) {
-  res.sendFile(path.join(__dirname, "/public/assets/js/index.js"));
-});
+app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
 
 // This "*" must be at the bottom so that the above routes work.
 app.get("*", function(req, res) {
