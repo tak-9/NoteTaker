@@ -1,15 +1,25 @@
 {
   "name": "note-taker",
   "version": "1.0.0",
-  "description": "",
+  "description": "Note Taker by Tak",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "author": "",
+  "author": "Takuji",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
     "mysql": "^2.16.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tak-9/NoteTaker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tak-9/NoteTaker/issues"
+  },
+  "homepage": "https://github.com/tak-9/NoteTaker#readme"
 }
