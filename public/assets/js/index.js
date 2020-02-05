@@ -3,6 +3,11 @@ var $noteText = $(".note-textarea");
 var $saveNoteBtn = $(".save-note");
 var $newNoteBtn = $(".new-note");
 var $noteList = $(".list-container .list-group");
+var $confirmDeleteBtn = $("#confirmdelete"); 
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
 
 // activeNote is used to keep track of the note in the textarea
 var activeNote = {};
@@ -60,17 +65,26 @@ var handleNoteSave = function() {
   saveNote(newNote).then(function(data) {
     getAndRenderNotes();
     renderActiveNote();
+    $('#saveModal').modal('show');
   });
 };
 
-// Delete the clicked note
-var handleNoteDelete = function(event) {
-  // prevents the click listener for the list from being called when the button inside of it is clicked
-  event.stopPropagation();
-
+var showConfirmDeleteDialog = function(event){
   var note = $(this)
     .parent(".list-group-item")
     .data();
+
+  $confirmDeleteBtn.on("click", note, handleNoteDelete);
+  $('#deleteModal').modal('show');
+}
+
+// Delete the clicked note
+var handleNoteDelete = function(event) {
+  // event.data is passed as argument
+  var note = event.data;
+  // prevents the click listener for the list from being called when the button inside of it is clicked
+  //event.stopPropagation();
+
 
   if (activeNote.id === note.id) {
     activeNote = {};
@@ -116,7 +130,7 @@ var renderNoteList = function(notes) {
     var $li = $("<li class='list-group-item'>").data(note);
     var $span = $("<span>").text(note.title);
     var $delBtn = $(
-      "<i class='fas fa-trash-alt float-right text-danger delete-note'>"
+      "<i class='fas fa-trash-alt float-right text-danger delete-note' data-toggle='modal' data-target='#myModal'>"
     );
 
     $li.append($span, $delBtn);
@@ -136,7 +150,7 @@ var getAndRenderNotes = function() {
 $saveNoteBtn.on("click", handleNoteSave);
 $noteList.on("click", ".list-group-item", handleNoteView);
 $newNoteBtn.on("click", handleNewNoteView);
-$noteList.on("click", ".delete-note", handleNoteDelete);
+$noteList.on("click", ".delete-note", showConfirmDeleteDialog);
 $noteTitle.on("keyup", handleRenderSaveBtn);
 $noteText.on("keyup", handleRenderSaveBtn);
 
